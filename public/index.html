@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css" />
+    <script src="https://cdn.bootcss.com/echarts/4.7.0/echarts-en.common.js"></script>
+</head>
+
+<body>
+        <div id="air-pressure" class="top" style=""> 低压 </div>
+        <!-- 三栏-浮动布局 -->
+        <div class="wrapper">
+            <div class="left">
+                
+            </div>
+
+            <div class="right"></div>
+            
+            <div class="content">
+                <div class="btn-wrap"><div class="button">保 险 销</div></div>
+                <div class="btn-wrap"><div class="button">药 粉</div></div>
+                <div class="btn-wrap"><div class="button">喷 管</div></div>
+            </div>
+        </div>
+
+    <div id="main" style="width: 600px;height:300px; margin: 0 auto;"></div>
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'Temperature-Humidity'
+            },
+            tooltip: {},
+            xAxis: {
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            
+            yAxis: {},
+            series: [{
+                // name: '销量',
+                type: 'line',
+                smooth: true,
+                data: [5, 20, 36, 10, 10, 20],
+                color:  '#66ccff'
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
