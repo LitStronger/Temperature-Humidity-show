@@ -74,3 +74,24 @@ a {
 
 }
 
+.main-container{
+  position: absolute;
+  background-color: darkgrey;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
+  left: 0;
+  right: 0;
+}
+.part-left{
+  background-color: #0ac276;
+  display: inline-block;
+}
+.part-right{
+background-color: aqua;
+  display: inline-block;
+}
+.part-center{
+background-color: coral;
+display: inline-block;
+}
