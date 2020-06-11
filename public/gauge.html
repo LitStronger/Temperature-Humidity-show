@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ant Design Vue Menu 导航菜单事件例子</title>
+    <script src="//www.itxst.com/package/vue/vue.min.js"></script>
+    <script src="//www.itxst.com/package/ant-design-vue/antd.min.js"></script>
+    <link href="//www.itxst.com/package/ant-design-vue/antd.min.css" rel="stylesheet" />
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <script src="//www.itxst.com/package/ant-design-vue/vue-dash-event.js"></script>
+    
+    ​<div id="app">
+        <a-menu theme="dark" @click="home"mode="inline" style="width: 256px; min-height: 100vh;":defaultSelectedKeys="['1']">
+            <a-menu-item key="home"> 
+                <a-icon type="home"></a-icon>首页</a-menu-item>
+            <a-menu-item key="overview"> 
+                <a-icon type="eye" /></a-icon>概况</a-menu-item>
+            <a-sub-menu  key="list">
+                <span slot="title" >
+                    <a-icon type="unordered-list" /></a-icon>产品列表</span>
+                          <a-menu-item key="1">设备1</a-menu-item>
+                          <a-menu-item key="2">设备2</a-menu-item>
+                          <a-menu-item key="3">设备3</a-menu-item>
+                          <a-menu-item key="4">设备4</a-menu-item>
+                          <a-menu-item key="5">设备5</a-menu-item>
+                          <a-menu-item key="6">设备6</a-menu-item>
+            </a-sub-menu>
+        </a-menu>
+    </div>
+    <script>
+      var equip = [5];
+
+        Vue.use(window['vue-dash-event']);
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                current: ['home']
+            },
+            methods: {
+                home: function (obj) {
+                    // alert("点击了：" + obj.key)
+                },
+                deselect: function (obj) {
+                    // alert("取消了：" + obj.key)
+                },
+                select: function (obj) {
+                    // alert("选择了：" + obj.key)
+                    if(obj.key == 'list'){
+                      obj.push('<a-menu-item key="4">Tom</a-menu-item>')
+                    }
+                },
+                openChange(openKeys) {
+                    // alert("展开了：" + openKeys)
+
+                },
+            }
+        });
+    </script>
+</body>
+</html>

@@ -5,15 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css" />
-    <script src="https://cdn.bootcss.com/echarts/4.7.0/echarts-en.common.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-</head>
+    <!-- <script src="https://cdn.bootcss.com/echarts/4.7.0/echarts-en.common.js"></script> -->
+    <script src="./javascripts/echarts.min.js"></script>
+    <script src="./javascripts/jquery.js"></script>
+    <script src="./javascripts/stomp.js"></script>
+    <script src="./javascripts/sockjs.js"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://alphardex.github.io/static/aqua.min.css">
+</head>
 <body>
-        <div id="air-pressure" class="top" style=""> 低压 </div>
+    <style scoped>
+        div.ant-progress-circle,
+        div.ant-progress-line {
+          margin-right: 8px;
+          margin-bottom: 8px;
+        }
+      </style>
+        <div id="air-pressure" class="top"> 
+            <div id="gauge" style="height: 200px; margin: 10px auto 0 auto"></div>
+        </div>       
         <!-- 三栏-浮动布局 -->
-        <div class="wrapper">
+        <div class="wrapper">   
             <div class="left"></div>
+            <div class="content">
+                <div class="btn-wrap"><div class="button">保 险 销</div></div>
+                <div class="btn-wrap"><div class="button">药 粉</div></div>
+                <div class="btn-wrap"><div class="button">喷 管</div></div>
+            </div>
             <div class="right">
                 <div>
                     <div style="border-radius: 5px;box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);width: 40px; margin: 25px 0px 10px 15px; text-align: center;">湿度</div>
@@ -23,18 +43,9 @@
                     <div style="border-radius: 5px;box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);width: 65px; margin: 10px 0px 10px 15px; text-align: center;">相对湿度</div>
                     <div id="relative-humidity" style="text-align: center; font-size: 30px; color: #66ccff;">{{value}}%</div>
                 </div>
-
-            </div>
-
-            <div class="content">
-                <div class="btn-wrap"><div class="button">保 险 销</div></div>
-                <div class="btn-wrap"><div class="button">药 粉</div></div>
-                <div class="btn-wrap"><div class="button">喷 管</div></div>
-            </div>
+            </div>     
         </div>
-
     <div id="main" style="width: 600px;height:300px; margin: 0 auto;"></div>
-
     <script src="./javascripts/echart.js" ></script>
     <script>
         var vm = new Vue({
@@ -46,8 +57,7 @@
                 update: function(){
                     this.value = (Math.random()*40).toFixed(1)
                 }
-            }
-            
+            } 
         })
         var vm2 = new Vue({
             el: '#relative-humidity',
@@ -60,12 +70,33 @@
                 }
             }
         })
-
         setInterval(function(){
             vm.update()
             vm2.update()
         }, 1000)
-    </script>
 
+        /* websocket */        
+        function init() {
+            const url = 'ws://ws.huozhiniao.cn'; 
+            let ws = new WebSocket(url);
+            let client = Stomp.over(ws);
+            client.debug = false;
+            console.log('ws://ws.huozhiniao.cn')
+            deviceId = 89860412130
+            let on_connect = function () {
+                client.subscribe("/exchange/exchange.web.topic/rk-web"+deviceId, function (data) {
+                    var msg = JSON.parse(data.body);
+                    console.log(data.body);
+                });
+            console.log('connect is success');
+            };
+            let on_error = function () {
+                console.log('error');
+            };
+            //参数依次为：用户名，密码，连接后，出错，虚拟主机名
+            client.connect('xingke', 'xingke', on_connect, on_error, '/');
+        } 
+        init();
+    </script>
 </body>
 </html>

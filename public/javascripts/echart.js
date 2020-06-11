@@ -1,3 +1,46 @@
+/* 仪表盘 */
+var gauge = echarts.init(document.getElementById('gauge'));
+let gaugeOption = {
+    tooltip: {
+        formatter: '{a} <br/>{b} : {c}%'
+    },
+    toolbox: {
+        feature: {
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            min: 10,
+            max: 90,
+            radius: '100%',
+            axisLine: {
+                lineStyle: {
+                    width: 15 // 修改宽度
+                }
+            },
+            axisLabel: {
+                distance: -10 // 刻度值与表盘的距离
+            },
+            detail: {formatter: '{value}%'},
+            data: [{value: 5, name: '低压'}]
+        }
+    ]
+};
+
+gauge.setOption(gaugeOption);
+
+// setInterval(function () {
+//     option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+//     myChart.setOption(option, true);
+// },2000);
+
+
+
+/* 曲线图 */
 
 // 基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('main'));
@@ -8,7 +51,6 @@ var value = Math.random()*40;
 for (var i = 0; i < 1000; i++) {
     data.push(randomData());
 }
-
 var option = {
     title: {
         text: 'Temperature-Humidity'
