@@ -45,15 +45,18 @@ gauge.setOption(gaugeOption);
 // 基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('main'));
 var data = [];        // 指定图表的配置项和数据
-var now = new Date();
 var oneDay = 24 * 3600 * 1000;
-var value = Math.random()*40;
-for (var i = 0; i < 1000; i++) {
+var now = new Date() - 10*oneDay;
+
+var oneMin = 60 *1000
+var oneHour = 3600*1000
+var value = Math.random()*5+28;
+for (var i = 0; i < 100; i++) {
     data.push(randomData());
 }
 var option = {
     title: {
-        text: 'Temperature-Humidity'
+        text: 'Temperature-History'
     },
     tooltip: {
         trigger: 'axis',
@@ -90,28 +93,38 @@ var option = {
     }]
 };
 function randomData() {
-    now = new Date(+now + oneDay);
-    value = value + Math.random() * 11 - 5;
+    now = new Date(+now + oneMin);
+    //now = new Date(+now +oneMin)
+    var h=now.getHours();
+    var mm=now.getMinutes();
+    h=h>9?h:"0"+h;
+    mm=mm>9?mm:"0"+mm;
+    console.log([now.getFullYear(), now.getMonth() + 1, now.getDate(),].join('/')+ ' '+h + ':'+ mm)
+    value = value + Math.random() * 2-1;
     return {
         name: now.toString(),
         value: [
-            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-            Math.round(value)
+            //[now.getFullYear(), now.getMonth() + 1, now.getDate(), ' ',h , ':', mm].join('/'),//+' '+hour+':00',
+            [now.getFullYear(), now.getMonth() + 1, now.getDate(),].join('/')+ ' '+h + ':'+ mm,
+           // [now.getMonth() + 1, now.getDate()].join('/'),
+            //Math.round(value)
+            value
+
         ]
     };
 }  
 // 使用刚指定的配置项和数据显示图表。
 myChart.setOption(option);
 
-setInterval(function () {
-    for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
-    }
-    myChart.setOption({
-        series: [{
-            data: data
-        }]
-    });
-}, 1000);
+// setInterval(function () {
+//     for (var i = 0; i < 5; i++) {
+//         data.shift();
+//         data.push(randomData());
+//     }
+//     myChart.setOption({
+//         series: [{
+//             data: data
+//         }]
+//     });
+// }, 20000);
 

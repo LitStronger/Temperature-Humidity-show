@@ -13,7 +13,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link rel="stylesheet" href="https://alphardex.github.io/static/aqua.min.css">
+    <!-- <link rel="stylesheet" href="https://alphardex.github.io/static/aqua.min.css"> -->
 </head>
 <body>
     <style scoped>
@@ -36,7 +36,7 @@
             </div>
             <div class="right">
                 <div>
-                    <div style="border-radius: 5px;box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);width: 40px; margin: 25px 0px 10px 15px; text-align: center;">湿度</div>
+                    <div style="border-radius: 5px;box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);width: 40px; margin: 25px 0px 10px 15px; text-align: center;">温度</div>
                     <div id="humidity" style="text-align: center; font-size: 30px; color: #0AC267;">{{value}}°C</div>
                 </div>
                 <div>
@@ -51,29 +51,29 @@
         var vm = new Vue({
             el: '#humidity',
             data: {
-                value: 40
+                value: (Math.random()*3+29).toFixed(1)
             },
             methods: {
                 update: function(){
-                    this.value = (Math.random()*40).toFixed(1)
+                    this.value = (Math.random()*3+29).toFixed(1)
                 }
             } 
         })
         var vm2 = new Vue({
             el: '#relative-humidity',
             data: {
-                value: 100
+                value: (Math.random()*3+79).toFixed(2)
             },
             methods: {
                 update: function(){
-                    this.value = (Math.random()*100).toFixed(2)
+                    this.value = (Math.random()*3+79).toFixed(2)
                 }
             }
         })
         setInterval(function(){
             vm.update()
             vm2.update()
-        }, 1000)
+        }, 5000)
 
         /* websocket */        
         function init() {
